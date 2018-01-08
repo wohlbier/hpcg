@@ -117,8 +117,10 @@ HPCG_DEFS     = $(HPCG_OPTS) $(HPCG_INCLUDES)
 # - Compilers / linkers - Optimization flags ---------------------------
 # ----------------------------------------------------------------------
 #
-CXX          = /usr/bin/g++
-CXXFLAGS     = $(HPCG_DEFS) -O3 -ffast-math -ftree-vectorize -ftree-vectorizer-verbose=0 -fopenmp
+#CXX          = /usr/bin/g++
+CXX          = $(shell which g++)
+CXXFLAGS     = $(HPCG_DEFS) -O3 -ffast-math -ftree-vectorize -ftree-vectorizer-verbose=0 -fopenmp -std=c++11
+CXXFLAGS     = $(HPCG_DEFS) -O0 -g -fopenmp -std=c++11
 #
 LINKER       = $(CXX)
 LINKFLAGS    = $(CXXFLAGS)
