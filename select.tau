@@ -1,0 +1,8 @@
+BEGIN_FILE_INCLUDE_LIST
+
+ComputeDotProduct_ref.cpp
+ComputeSPMV_ref.cpp
+ComputeSYMGS_ref.cpp
+ComputeWAXPBY_ref.cpp
+
+END_FILE_INCLUDE_LIST
