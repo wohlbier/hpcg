@@ -22,14 +22,15 @@ tau init --application-name $APPNAME --target-name centennial --mpi F \
 #--openmp
 
 tau measurement delete sample
-tau select profile
+tau measurement copy profile uncore_imc
+tau select uncore_imc
 
 # debugging
 #tau measurement edit profile --keep-inst-files
 
 tau application edit hpcg --select-file `pwd`/select.tau
 
-tau measurement edit profile --source-inst automatic --compiler-inst never \
+tau measurement edit uncore_imc --source-inst automatic --compiler-inst never \
 --metrics \
 PAPI_NATIVE:bdx_unc_imc0::UNC_M_CAS_COUNT:RD:cpu=0,\
 PAPI_NATIVE:bdx_unc_imc0::UNC_M_CAS_COUNT:WR:cpu=0,\
@@ -51,7 +52,7 @@ PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:WR:cpu=0
 
 
 # Set up measurements of stalls to use formulas from Molka, et al.
-tau measurement copy profile mem_bnd_stall_cycs
+tau measurement copy uncore_imc mem_bnd_stall_cycs
 tau select mem_bnd_stall_cycs
 tau measurement edit mem_bnd_stall_cycs \
 --metrics \
@@ -60,7 +61,7 @@ PAPI_NATIVE:CYCLE_ACTIVITY:CYCLES_NO_EXECUTE:cpu=0,\
 PAPI_NATIVE:RESOURCE_STALLS:SB:cpu=0,\
 PAPI_NATIVE:CYCLE_ACTIVITY:STALLS_L1D_PENDING:cpu=0
 
-tau measurement copy profile bw_lat_stall_cycs
+tau measurement copy uncore_imc bw_lat_stall_cycs
 tau select bw_lat_stall_cycs
 tau measurement edit bw_lat_stall_cycs \
 --metrics \
