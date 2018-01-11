@@ -17,13 +17,14 @@ PAPI_ROOT=${HOME}/devel/packages/spack/opt/spack/linux-rhel7-x86_64/gcc-6.1.0/pa
 export PATH=${PAPI_ROOT}/bin:${PATH}
 
 # initialize tau commander project
-tau init --application-name $APPNAME --target-name centennial --mpi F \
+tau init --application-name $APPNAME --target-name centennial --mpi \
 --papi=${PAPI_ROOT} --tau nightly
 #--openmp
 
 tau measurement delete sample
 tau measurement copy profile uncore_imc
 tau select uncore_imc
+tau measurement delete profile
 
 # debugging
 #tau measurement edit profile --keep-inst-files
@@ -39,7 +40,15 @@ PAPI_NATIVE:bdx_unc_imc1::UNC_M_CAS_COUNT:WR:cpu=0,\
 PAPI_NATIVE:bdx_unc_imc4::UNC_M_CAS_COUNT:RD:cpu=0,\
 PAPI_NATIVE:bdx_unc_imc4::UNC_M_CAS_COUNT:WR:cpu=0,\
 PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:RD:cpu=0,\
-PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:WR:cpu=0
+PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:WR:cpu=0,\
+PAPI_NATIVE:bdx_unc_imc0::UNC_M_CAS_COUNT:RD:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc0::UNC_M_CAS_COUNT:WR:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc1::UNC_M_CAS_COUNT:RD:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc1::UNC_M_CAS_COUNT:WR:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc4::UNC_M_CAS_COUNT:RD:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc4::UNC_M_CAS_COUNT:WR:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:RD:cpu=1,\
+PAPI_NATIVE:bdx_unc_imc5::UNC_M_CAS_COUNT:WR:cpu=1
 
 # run complains about incompatible papi metrics, but generates results.
 
@@ -56,19 +65,19 @@ tau measurement copy uncore_imc mem_bnd_stall_cycs
 tau select mem_bnd_stall_cycs
 tau measurement edit mem_bnd_stall_cycs \
 --metrics \
-PAPI_NATIVE:CPU_CLK_UNHALTED:cpu=0,\
-PAPI_NATIVE:CYCLE_ACTIVITY:CYCLES_NO_EXECUTE:cpu=0,\
-PAPI_NATIVE:RESOURCE_STALLS:SB:cpu=0,\
-PAPI_NATIVE:CYCLE_ACTIVITY:STALLS_L1D_PENDING:cpu=0
+PAPI_NATIVE:CPU_CLK_UNHALTED,\
+PAPI_NATIVE:CYCLE_ACTIVITY:CYCLES_NO_EXECUTE,\
+PAPI_NATIVE:RESOURCE_STALLS:SB,\
+PAPI_NATIVE:CYCLE_ACTIVITY:STALLS_L1D_PENDING
 
 tau measurement copy uncore_imc bw_lat_stall_cycs
 tau select bw_lat_stall_cycs
 tau measurement edit bw_lat_stall_cycs \
 --metrics \
-PAPI_NATIVE:RESOURCE_STALLS:SB:cpu=0,\
-PAPI_NATIVE:CYCLE_ACTIVITY:STALLS_L1D_PENDING:cpu=0,\
-PAPI_NATIVE:L1D_PEND_MISS:FB_FULL:cpu=0,\
-PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL:cpu=0
+PAPI_NATIVE:RESOURCE_STALLS:SB,\
+PAPI_NATIVE:CYCLE_ACTIVITY:STALLS_L1D_PENDING,\
+PAPI_NATIVE:L1D_PEND_MISS:FB_FULL,\
+PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL
 
 # From Molka, et al.
 # Active cycles: 
@@ -89,6 +98,18 @@ PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL:cpu=0
 
 
 # OMP_NUM_THREADS=1 tau numactl -C 0 -- ./xhpcg
+# CPU_CLK_UNHALTED :   
+# CYCLES_NO_EXECUTE:    (% cycles are stalled)
+# RESOURCE_STALLS:SB:  
+# STALLS_L1D_PENDING:   (% of stalled cycles are memory bound)
+# FB_FULL + SQ_FULL:   
+# max(SB, FB_FULL + SQ_FULL):  (number of cycles bandwidth bound)
+# latency_bound = memory bound - bandwidth bound =
+
+
+###############################################################################
+# tau mpirun -n 400 ./xhpcg
+# mean values
 # CPU_CLK_UNHALTED :   
 # CYCLES_NO_EXECUTE:    (% cycles are stalled)
 # RESOURCE_STALLS:SB:  

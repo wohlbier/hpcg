@@ -1,0 +1,52 @@
+SGI MPT
+
+mpirun -n 80 ./xhpcg 
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=16.8562
+
+mpirun -n 40 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=17.0003
+
+mpirun -n 20 ./xhpcg 
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=8.54187
+
+
+export MPI_DSM_VERBOSE=1
+export MPI_DSM_CPULIST="0-39/2"
+mpirun -n 20 ./xhpcg 
+wrank  grank lrank   pinning	 node name	cpuid
+    0      0     0   yes	  r3i5n13     	    0
+    1	   1     1   yes	  r3i5n13	    2
+    2	   2     2   yes          r3i5n13           4
+    3	   3     3   yes          r3i5n13           6
+etc
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=16.0405
+
+
+OMP_NUM_THREADS=2 mpirun -n 20 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=10.9287
+
+OMP_NUM_THREADS=4 mpirun -n 20 ./xhpcg 
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=6.74298
+
+
+Intel MPI (mpiicpc)
+mpirun -n 80 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=16.9662
+
+mpirun -n 40 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=17.0433
+
+mpirun -n 20 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=15.9883
+
+OMP_NUM_THREADS=2 mpirun -n 20 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=16.3493
+
+OMP_NUM_THREADS=4 mpirun -n 20 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=15.0929
+
+OMP_NUM_THREADS=2 mpirun -n 40 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=16.9638
+
+mpirun -n 400 ./xhpcg
+Final Summary::HPCG result is VALID with a GFLOP/s rating of=169.814
