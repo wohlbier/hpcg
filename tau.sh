@@ -117,3 +117,13 @@ PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL
 # FB_FULL + SQ_FULL:   
 # max(SB, FB_FULL + SQ_FULL):  (number of cycles bandwidth bound)
 # latency_bound = memory bound - bandwidth bound =
+
+# PAPI_L2_TCM
+# PAPI_L2_TCA
+# PAPI_L3_TCM
+# PAPI_L3_TCA
+
+# PAPI_TLB_DM
+# PAPI_LST_INS
+
+
