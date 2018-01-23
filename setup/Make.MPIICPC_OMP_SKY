@@ -119,9 +119,12 @@ HPCG_DEFS     = $(HPCG_OPTS) $(HPCG_INCLUDES) -DMPICH_IGNORE_CXX_SEEK
 #
 CXX          = mpiicpc
 CXXFLAGS     = $(HPCG_DEFS) -O3 -qopenmp
+CXXFLAGS    += -I$(INTELMPIDIR)/include64
+CXXFLAGS    += -xCORE-AVX512 -qopt-zmm-usage=high
 #
 LINKER       = $(CXX)
 LINKFLAGS    = $(CXXFLAGS)
+LINKFLAGS   += -L$(INTELMPIDIR)/lib64
 #
 ARCHIVER     = ar
 ARFLAGS      = r
