@@ -46,9 +46,10 @@ if test ! -f bin/hpcg.dat ; then
   cp ${src_path}/bin/hpcg.dat bin/hpcg.dat
 fi
 
-# copy pbs scripts into bin
+abs_src_path=`cd "$src_path"; pwd`
+# soft link pbs scripts into bin
 if test ! -f bin/run.$arg_arch.pbs ; then
-  cp ${src_path}/bin/run.$arg_arch.pbs bin/
+  ln -sf $abs_src_path/bin/run.$arg_arch.pbs bin/run.$arg_arch.pbs
 fi
 
 # copy the architecture setup file

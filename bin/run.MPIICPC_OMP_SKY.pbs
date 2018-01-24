@@ -1,0 +1,17 @@
+#!/bin/tcsh
+
+#PBS -N hpcg
+#PBS -l nodes=1:ppn=72:skylake
+#PBS -l walltime=10:00
+#PBS -j oe
+
+module load intelmpi/18.0
+module list
+
+cd $PBS_O_WORKDIR
+setenv OMP_NUM_THREADS 1
+
+mpiexec \
+-genv I_MPI_DEBUG 5 \
+-env I_MPI_PIN_PROCESSOR_LIST 0-17 \
+-n 18 ./xhpcg

@@ -7,9 +7,10 @@
 #PBS -l walltime=10:00
 #PBS -j oe
 
+module load openmpi/armllvm/18.1
+module list
+
 cd $PBS_O_WORKDIR
 setenv OMP_NUM_THREADS 1
 
-module load openmpi/armllvm/18.1
-module list
 mpirun --report-bindings -n 28 --map-by core --bind-to core ./xhpcg
