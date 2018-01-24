@@ -46,5 +46,12 @@ if test ! -f bin/hpcg.dat ; then
   cp ${src_path}/bin/hpcg.dat bin/hpcg.dat
 fi
 
+# copy pbs scripts into bin
+for filename in ${src_path}/bin/*.pbs; do
+  if test ! -f bin/$(basename "$filename") ; then
+    cp $filename bin/
+  fi
+done
+
 # copy the architecture setup file
 cp -f $setup_file setup
