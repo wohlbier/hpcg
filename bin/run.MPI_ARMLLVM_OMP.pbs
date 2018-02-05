@@ -11,4 +11,8 @@ module list
 cd $PBS_O_WORKDIR
 setenv OMP_NUM_THREADS 1
 
-mpirun --report-bindings -n 28 --map-by core --bind-to core ./xhpcg
+#mpirun --report-bindings -n 28 --map-by core --bind-to core ./xhpcg
+#mpirun --report-bindings -n 56 --map-by core --bind-to core ./xhpcg
+
+# from Cavium
+mpirun --mca btl vader,self --map-by node:PE=1 --bind-to core -np 56 ./xhpcg

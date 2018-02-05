@@ -2,7 +2,7 @@
 
 #PBS -N hpcg
 #PBS -l nodes=1:ppn=56
-#PBS -l walltime=10:00
+#PBS -l walltime=1:00:00
 #PBS -j oe
 
 cd $PBS_O_WORKDIR
@@ -10,4 +10,7 @@ setenv OMP_NUM_THREADS 1
 setenv HYDRA_TOPO_DEBUG 1
 
 #mpiexec -n 28 -map-by core -bind-to core ./xhpcg
-mpiexec -n 28 ./xhpcg
+#mpiexec -n 28 -map-by core -bind-to core ./xhpcg+pat
+#mpiexec -n 28 ./xhpcg
+#mpiexec -n 28 ./xhpcg+pat
+mpiexec -n 28 ./xhpcg+apa
