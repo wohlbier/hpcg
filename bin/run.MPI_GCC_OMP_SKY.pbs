@@ -1,0 +1,14 @@
+#!/bin/tcsh
+
+#PBS -N hpcg
+#PBS -l nodes=1:ppn=72:skylake
+#PBS -l walltime=10:00
+#PBS -j oe
+
+module load openmpi/gcc/7.2
+module list
+
+cd $PBS_O_WORKDIR
+setenv OMP_NUM_THREADS 1
+
+mpirun --report-bindings -n 18 --map-by core --bind-to core ./xhpcg

@@ -118,8 +118,8 @@ HPCG_DEFS     = $(HPCG_OPTS) $(HPCG_INCLUDES)
 # ----------------------------------------------------------------------
 #
 CXX          = mpicxx
-CXXFLAGS     = $(HPCG_DEFS) -O3 -fopenmp
-CXXFLAGS     += -I$(AOCCDIR)/include
+CXXFLAGS     = $(HPCG_DEFS) -g -O3 -fopenmp -std=c++11
+CXXFLAGS    += -march=skylake-avx512
 #
 LINKER       = $(CXX)
 LINKFLAGS    = $(CXXFLAGS)
