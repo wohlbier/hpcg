@@ -1,0 +1,27 @@
+#!/bin/bash
+ulimit -s unlimited
+
+#ARGS="-no-stack-stitching -stackwalk-mode=online"
+
+#NUMA=""
+#PROJECT="CACHE"
+#NUMA="numactl -m 0"
+#PROJECT=DRAM
+#NUMA="numactl -m 1"
+#PROJECT=MCDRAM
+#NUMA="numactl -C 0-17"
+# advisor pics up all four sockets for rooflines, but gives option to use
+# single threaded results. So run on one thread to use those.
+#NUMA="numactl -C 0"
+PROJECT=skylake
+
+#${NUMA} advixe-cl -collect survey -no-auto-finalize -project-dir /usr/people/wohlbier/devel/stream/${PROJECT} ${ARGS} -- /usr/people/wohlbier/devel/stream/stream_f.exe
+#${NUMA} advixe-cl -collect tripcounts -flops-and-masks -project-dir /usr/people/wohlbier/devel/stream/${PROJECT} -- /usr/people/wohlbier/devel/stream/stream_f.exe
+
+#${NUMA} /local/x86_64_linux26_rhel7/install/intel-2018-update1/advisor_2018.1.1.535164/bin64/advixe-cl -collect survey -project-dir /u/wohlbier/devel/stream/${PROJECT} -- /u/wohlbier/devel/stream/stream_f.exe
+#${NUMA} /local/x86_64_linux26_rhel7/install/intel-2018-update1/advisor_2018.1.1.535164/bin64/advixe-cl -collect tripcounts -flop -project-dir /u/wohlbier/devel/stream/${PROJECT} -- /u/wohlbier/devel/stream/stream_f.exe
+
+
+ARGS="-genv I_MPI_DEBUG 5 -env I_MPI_PIN_PROCESSOR_LIST 0"
+mpiexec ${ARGS} -n 1 -gtool "/usr/local/install/intel-2018-update1/advisor/bin64/advixe-cl -collect survey -project-dir /u/wohlbier/devel/hpcg/skylake:0" ./xhpcg
+mpiexec ${ARGS} -n 1 -gtool "/usr/local/install/intel-2018-update1/advisor/bin64/advixe-cl -collect tripcounts -flop -project-dir /u/wohlbier/devel/hpcg/skylake:0" ./xhpcg
