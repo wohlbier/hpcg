@@ -132,47 +132,6 @@ def main():
     plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
     plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
 
-
-# miniapp 1, the update loop, flat mode MCDRAM
-
-#    # fortran
-#    AI = 0.433
-#    GFS = 86
-#    plt.plot(AI,GFS,'*',ms=10,label='Fortran')
-#    plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
-#    plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
-#
-#    # intrinsic
-#    AI = 0.263
-#    GFS = 365
-#    plt.plot(AI,GFS,'o',ms=5,label='Intrinsic')
-#    plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
-#    plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
-
-# miniapp 2
-        
-#    # omp parallel with atomics
-#    AI = 0.046
-#    GFS = 17.5 # GF/s higher than color, but slower!
-#    plt.plot(AI,GFS,'*',ms=10,label='color: 17.5 GF/s')
-#    plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
-#    plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
-
-#    # omp parallel with coloring, no atomics
-#    AI = 0.064
-#    GFS = 19.7
-#    plt.plot(AI,GFS,'*',ms=10,label='run time')
-#    # 375 x 0.064 = 24
-#    plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
-#    plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
-#
-#    # omp parallel with coloring, hardwired geometry
-#    AI = 0.059
-#    GFS = 15.4
-#    plt.plot(AI,GFS,'o',ms=5,label='compile time')
-#    plt.plot([AI,AI], [ymin,ymax], color='k', linestyle='--', lw=0.2)
-#    plt.plot([xmin,xmax], [GFS,GFS], color='k', linestyle='--', lw=0.2)
-
     plt.legend(loc='lower right')
     plt.show()
 
