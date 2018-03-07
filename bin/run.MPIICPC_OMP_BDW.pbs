@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#PBS -N hpcg
+#PBS -l select=7:ncpus=40:mpiprocs=40
+#PBS -l walltime=20:00
+#PBS -j oe
+#PBS -A ARLAP96070PET
+#PBS -q standard
+
+module purge
+module load compiler/intel/2017.1.132
+module load mpi/intelmpi/2017.1.132
+module list
+
+cd $PBS_O_WORKDIR
+export OMP_NUM_THREADS=1
+
+#mpiexec -n 256 ./xhpcg
+tau mpiexec -n 256 ./xhpcg
+
+module load ddt
+map --profile mpiexec -n 256 ./xhpcg
